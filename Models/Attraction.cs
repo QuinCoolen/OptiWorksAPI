@@ -8,4 +8,6 @@ public class Attraction(string name, int maxRiders)
   public ICollection<Visitor>? VisitorsInQueue { get; set; } = [];
   public ICollection<Visitor>? VisitorsOnRide { get; set; } = [];
   public bool IsOpen { get; set; } = true;
+  public int WorldId { get; set; }
+  public World World { get; set; }
 }

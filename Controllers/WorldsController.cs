@@ -22,33 +22,88 @@ namespace OptiWorksAPI.Controllers
 
         // GET: api/Worlds
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<World>>> GetWorlds()
+        public async Task<ActionResult<IEnumerable<WorldDto>>> GetWorlds()
         {
-            return await _context.Worlds.ToListAsync();
+            var worlds = await _context.Worlds
+                .Include(w => w.Attractions)
+                .ToListAsync();
+
+            var worldDtos = worlds.Select(w => new WorldDto
+            {
+                Id = w.Id,
+                Name = w.Name,
+                Attractions = w.Attractions.Select(a => new AttractionDto
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    MaxRiders = a.MaxRiders,
+                    IsOpen = a.IsOpen,
+                    WorldId = w.Id
+                }).ToList()
+            }).ToList();
+
+            return Ok(worldDtos);
         }
 
         // GET: api/Worlds/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<World>> GetWorld(int id)
+        public async Task<ActionResult<WorldDto>> GetWorld(int id)
         {
-            var world = await _context.Worlds.FindAsync(id);
+            var world = await _context.Worlds
+                .Include(w => w.Attractions)
+                .Where(w => w.Id == id)
+                .FirstOrDefaultAsync();
+            
+            var worldDto = new WorldDto
+            {
+                Id = world.Id,
+                Name = world.Name,
+                Attractions = world.Attractions.Select(a => new AttractionDto
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    MaxRiders = a.MaxRiders,
+                    IsOpen = a.IsOpen,
+                    WorldId = world.Id
+                }).ToList()
+            };
 
-            if (world == null)
+            if (worldDto == null)
             {
                 return NotFound();
             }
 
-            return world;
+            return worldDto;
         }
 
         // PUT: api/Worlds/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutWorld(int id, World world)
+        public async Task<IActionResult> PutWorld(int id, WorldDto worldDto)
         {
-            if (id != world.Id)
+            if (id != worldDto.Id)
             {
                 return BadRequest();
+            }
+
+            var world = await _context.Worlds.Include(w => w.Attractions).FirstOrDefaultAsync(w => w.Id == id);
+            if (world == null)
+            {
+                return NotFound();
+            }
+
+            world.Name = worldDto.Name;
+
+            // Updating attractions
+            foreach (var attractionDto in worldDto.Attractions)
+            {
+                var attraction = world.Attractions.FirstOrDefault(a => a.Id == attractionDto.Id);
+                if (attraction != null)
+                {
+                    attraction.Name = attractionDto.Name;
+                    attraction.MaxRiders = attractionDto.MaxRiders;
+                    attraction.IsOpen = attractionDto.IsOpen;
+                }
             }
 
             _context.Entry(world).State = EntityState.Modified;
@@ -75,12 +130,26 @@ namespace OptiWorksAPI.Controllers
         // POST: api/Worlds
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<World>> PostWorld(World world)
+        public async Task<ActionResult<WorldDto>> PostWorld(WorldDto worldDto)
         {
+            var world = new World(worldDto.Name);
+
+            foreach (var attractionDto in worldDto.Attractions)
+            {
+                var attraction = new Attraction(attractionDto.Name, attractionDto.MaxRiders)
+                {
+                    IsOpen = attractionDto.IsOpen,
+                    World = world
+                };
+                world.Attractions.Add(attraction);
+            }
+
             _context.Worlds.Add(world);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetWorld", new { id = world.Id }, world);
+            worldDto.Id = world.Id;
+
+            return CreatedAtAction(nameof(GetWorld), new { id = worldDto.Id }, worldDto);
         }
 
         // DELETE: api/Worlds/5

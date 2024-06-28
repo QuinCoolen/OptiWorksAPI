@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OptiWorksAPI.Models;
 
@@ -11,9 +12,11 @@ using OptiWorksAPI.Models;
 namespace OptiWorksAPI.Migrations
 {
     [DbContext(typeof(OwContext))]
-    partial class OwContextModelSnapshot : ModelSnapshot
+    [Migration("20240628103713_UpdateAttractionWorldRelationship2")]
+    partial class UpdateAttractionWorldRelationship2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

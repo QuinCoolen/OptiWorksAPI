@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MySql.EntityFrameworkCore.DataAnnotations;
-using MySql.EntityFrameworkCore.Extensions;
 
 namespace OptiWorksAPI.Models;
 
@@ -41,5 +39,10 @@ public class OwContext(DbContextOptions<OwContext> options) : IdentityDbContext<
         .WithMany(a => a.VisitorsOnRide)
         .HasForeignKey(v => v.AttractionOnRideId)
         .OnDelete(DeleteBehavior.Restrict);
+
+    modelBuilder.Entity<World>()
+        .HasMany(w => w.Attractions)
+        .WithOne(a => a.World)
+        .HasForeignKey(a => a.WorldId);
   }
 }

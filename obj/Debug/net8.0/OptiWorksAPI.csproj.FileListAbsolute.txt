@@ -275,3 +275,4 @@ C:\Users\quinc\Documents\Dev\School\Fontys\talktome\OptiWorksAPI\bin\Debug\net8.
 C:\Users\quinc\Documents\Dev\School\Fontys\talktome\OptiWorksAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\quinc\Documents\Dev\School\Fontys\talktome\OptiWorksAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 C:\Users\quinc\Documents\Dev\School\Fontys\talktome\OptiWorksAPI\bin\Debug\net8.0\MySql.EntityFrameworkCore.dll
+C:\Users\quinc\Documents\Dev\School\Fontys\talktome\OptiWorksAPI\obj\Debug\net8.0\OptiWorksAPI.sourcelink.json
