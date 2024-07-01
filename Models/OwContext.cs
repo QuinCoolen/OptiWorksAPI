@@ -6,7 +6,6 @@ namespace OptiWorksAPI.Models;
 
 public class OwContext(DbContextOptions<OwContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
-  public DbSet<Visitor> Visitors { get; set; } = null!;
   public DbSet<Attraction> Attractions { get; set; } = null!;
   public DbSet<World> Worlds { get; set; } = null!;
 
@@ -27,18 +26,6 @@ public class OwContext(DbContextOptions<OwContext> options) : IdentityDbContext<
     modelBuilder.Entity<IdentityUserClaim<string>>(entity => entity.Property(m => m.UserId).HasMaxLength(80));
     modelBuilder.Entity<IdentityRoleClaim<string>>(entity => entity.Property(m => m.Id).HasMaxLength(80));
     modelBuilder.Entity<IdentityRoleClaim<string>>(entity => entity.Property(m => m.RoleId).HasMaxLength(80));
-
-    modelBuilder.Entity<Visitor>()
-        .HasOne(v => v.AttractionInQueue)
-        .WithMany(a => a.VisitorsInQueue)
-        .HasForeignKey(v => v.AttractionInQueueId)
-        .OnDelete(DeleteBehavior.Restrict);
-
-    modelBuilder.Entity<Visitor>()
-        .HasOne(v => v.AttractionOnRide)
-        .WithMany(a => a.VisitorsOnRide)
-        .HasForeignKey(v => v.AttractionOnRideId)
-        .OnDelete(DeleteBehavior.Restrict);
 
     modelBuilder.Entity<World>()
         .HasMany(w => w.Attractions)

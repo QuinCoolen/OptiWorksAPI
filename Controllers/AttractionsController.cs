@@ -28,6 +28,10 @@ namespace OptiWorksAPI.Controllers
                 {
                     Id = a.Id,
                     Name = a.Name,
+                    Disruptions = a.Disruptions,
+                    Shows = a.Shows,
+                    Misc = a.Misc,
+                    Visitors = a.VisitorsInQueue,
                     MaxRiders = a.MaxRiders,
                     IsOpen = a.IsOpen,
                     WorldId = a.WorldId
@@ -46,6 +50,10 @@ namespace OptiWorksAPI.Controllers
                 {
                     Id = a.Id,
                     Name = a.Name,
+                    Disruptions = a.Disruptions,
+                    Shows = a.Shows,
+                    Misc = a.Misc,
+                    Visitors = a.VisitorsInQueue,
                     MaxRiders = a.MaxRiders,
                     IsOpen = a.IsOpen,
                     WorldId = a.WorldId
@@ -77,6 +85,10 @@ namespace OptiWorksAPI.Controllers
             }
 
             attraction.Name = attractionDto.Name;
+            attraction.Disruptions = attractionDto.Disruptions;
+            attraction.Shows = attractionDto.Shows;
+            attraction.Misc = attractionDto.Misc;
+            attraction.VisitorsInQueue = attractionDto.Visitors;
             attraction.MaxRiders = attractionDto.MaxRiders;
             attraction.IsOpen = attractionDto.IsOpen;
 
@@ -122,6 +134,10 @@ namespace OptiWorksAPI.Controllers
 
             var attraction = new Attraction(attractionDto.Name, attractionDto.MaxRiders)
             {
+                Disruptions = attractionDto.Disruptions,
+                Shows = attractionDto.Shows,
+                Misc = attractionDto.Misc,
+                VisitorsInQueue = attractionDto.Visitors,
                 IsOpen = attractionDto.IsOpen,
                 World = world
             };

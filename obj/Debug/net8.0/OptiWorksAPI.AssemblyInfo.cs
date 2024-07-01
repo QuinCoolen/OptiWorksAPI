@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OptiWorksAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4a2669734386e39b965c8121901debc0c11dedd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91f36c9a35aec7c08e7d1c3ecf38698ec407cfd9")]
 [assembly: System.Reflection.AssemblyProductAttribute("OptiWorksAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OptiWorksAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
